@@ -10,7 +10,7 @@
 	<div class="container">
 		<div class="btn-group btn-group-justified">
 				<a class="btn btn-primary" role="button" href="host.php" >Host</a>
-				<a class="btn btn-success" role="button">Game</a>
+				<a class="btn btn-success" role="button" href="game.php">Game</a>
 				<a class="btn btn-warning" role="button" href="player.php" disabled="true" >Player</a>
 		</div>
 	</div>
