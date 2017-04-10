@@ -21,9 +21,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <link   href="css/bootstrap.min.css" rel="stylesheet">
-    <script src="js/bootstrap.min.js"></script>
+    <?php
+		Database::drawHeader(1);
+	?>
 </head>
  
 <body>
@@ -60,7 +60,7 @@
                         </div>
                       </div>
                         <div class="form-actions">
-                          <a class="btn" href="index.php">Back</a>
+                          <a class="btn" href="host.php">Back</a>
                        </div>
                      
                       

@@ -1,19 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<?php
-		include 'database.php';
-		Database::drawHeader(0);
-	?>
-</head>
- 
-<body>
-	
+<div class="container">
+		<div class="btn-group btn-group-justified">
+				<a class="btn btn-primary" role="button" href="host.php" disabled="true">Host</a>
+				<a class="btn btn-success" role="button" href="game.php">Game</a>
+				<a class="btn btn-warning" role="button" href="player.php" >Player</a>
+		</div>
+	</div>
     <div class="container">
 		<div class="row">
                 <h3>Hosts</h3>
             </div>
             <div class="row">
+                <p>
+                    <a href="create.php" class="btn btn-success">Create</a>
+                </p>
+                 
                 <table class="table table-striped table-bordered">
                       <thead>
                         <tr>
@@ -25,6 +25,7 @@
                       </thead>
                       <tbody>
                       <?php
+                       include 'database.php';
                        $pdo = Database::connect();
                        $sql = 'SELECT * FROM host ORDER BY id DESC';
                        foreach ($pdo->query($sql) as $row) {
@@ -32,16 +33,12 @@
                                 echo '<td>'. $row['name'] . '</td>';
                                 echo '<td>'. $row['email_address'] . '</td>';
                                 echo '<td>'. $row['phone_number'] . '</td>';
-								echo '<td width=250>';
-								echo '<a class="btn" href="read.php?id='.$row['id'].'">Read</a>';
-								echo ' ';
-								if($_SESSION['type'] == 1 | $_SESSION['type'] == 2){
-									if($_SESSION['user_id'] == $row['user_id'] | $_SESSION['type'] == 2){
-									echo '<a class="btn btn-success" href="update.php?id='.$row['id'].'">Update</a>';
-									echo ' ';
-									echo '<a class="btn btn-danger" href="delete.php?id='.$row['id'].'">Delete</a>';
-									}
-								}
+                                echo '<td width=250>';
+                                echo '<a class="btn" href="read.php?id='.$row['id'].'">Read</a>';
+                                echo ' ';
+                                echo '<a class="btn btn-success" href="update.php?id='.$row['id'].'">Update</a>';
+                                echo ' ';
+                                echo '<a class="btn btn-danger" href="delete.php?id='.$row['id'].'">Delete</a>';
                                 echo '</td>';
                                 echo '</tr>';
                        }
@@ -51,5 +48,3 @@
                 </table>
         </div>
     </div> <!-- /container -->
-  </body>
-</html>

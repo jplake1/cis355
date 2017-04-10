@@ -25,9 +25,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <link   href="css/bootstrap.min.css" rel="stylesheet">
-    <script src="js/bootstrap.min.js"></script>
+    <?php
+		Database::drawHeader(0);
+	?>
 </head>
  
 <body>
@@ -43,7 +43,7 @@
                       <p class="alert alert-error">Are you sure to delete ?</p>
                       <div class="form-actions">
                           <button type="submit" class="btn btn-danger">Yes</button>
-                          <a class="btn" href="index.php">No</a>
+                          <a class="btn" href="host.php">No</a>
                         </div>
                     </form>
                 </div>

@@ -51,9 +51,9 @@
         if ($valid) {
             $pdo = Database::connect();
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sql = "UPDATE game_night  set game_date = ?, game_time = ?, game_location =?, game_description =? WHERE id = ?";
+            $sql = "UPDATE game_night  set game_date = ?, game_time = ?, game_location =?, game_description =?, host_id =?, player_id =? WHERE id = ?";
             $q = $pdo->prepare($sql);
-            $q->execute(array($game_date,$game_time,$game_location,$game_description,$id));
+            $q->execute(array($game_date,$game_time,$game_location,$game_description,$host_id,$player_id,$id));
             Database::disconnect();
             header("Location: game.php");
         }
@@ -131,6 +131,49 @@
                             <?php endif; ?>
                         </div>
                       </div>
+					
+					<div class="control-group <?php echo !empty($game_hostErrorError)?'error':'';?>">
+                        <label class="control-label">Host</label>
+                        <div class="controls">
+							<select name="host_id">
+							<?php	
+								$pdo = Database::connect();
+								$sql = 'SELECT * FROM host ORDER BY id DESC';
+								$tempflag = true;
+								foreach ($pdo->query($sql) as $row) {
+									if($row['id'] == $host_id){
+										echo "<option selected=selected value=" . $row['id'] . ">" . $row['name'] . "</option>";
+									}
+									else{
+										echo "<option value=" . $row['id'] . ">" . $row['name'] . "</option>";
+									}
+								}
+							?>
+							</select>
+						</div>
+                      </div>
+					  
+					<div class="control-group <?php echo !empty($game_playerErrorError)?'error':'';?>">
+                        <label class="control-label">Player</label>
+                        <div class="controls">
+							<select name="player_id">
+							<?php	
+								$pdo = Database::connect();
+								$sql = 'SELECT * FROM players ORDER BY id DESC';
+								$tempflag = true;
+								foreach ($pdo->query($sql) as $row) {
+									if($row['id'] == $player_id){
+										echo "<option selected=selected value=" . $row['id'] . ">" . $row['name'] . "</option>";
+									}
+									else{
+										echo "<option value=" . $row['id'] . ">" . $row['name'] . "</option>";
+									}
+								}
+							?>
+							</select>
+						</div>
+                      </div>
+					  
                       <div class="form-actions">
                           <button type="submit" class="btn btn-success">Update</button>
                           <a class="btn" href="game.php">Back</a>

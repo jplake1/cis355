@@ -1,8 +1,8 @@
 <?php
-     
-    require 'database.php';
+    session_start();
  if ( !empty($_POST)) {
-        // keep track validation errors
+        require 'database.php';
+		// keep track validation errors
         $game_dateError = null;
         $game_descriptionError = null;
         $game_locationError = null;
@@ -14,9 +14,9 @@
         $game_description = $_POST['game_description'];
         $game_location = $_POST['game_location'];
 		$game_time = $_POST['game_time'];
-		$host_id = $_POST['host_id'];
-		$player_id = $_POST['player_id'];
-         
+		$userID = $_SESSION['user_id'];
+   
+		 
         // validate input
         $valid = true;
         if (empty($game_date)) {
@@ -43,12 +43,19 @@
         if ($valid) {
             $pdo = Database::connect();
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sql = "INSERT INTO game_night (game_date,game_time,game_location,game_description,host_id,player_id) values(?, ?, ?, ?, ?, ?)";
+			
+			$stmt = $pdo->prepare('SELECT ID FROM host WHERE user_id = ?');
+			$stmt->execute([$userID]);
+			$temp = $stmt->fetch();
+			$host_id = $temp['ID'];
+			
+            $sql = "INSERT INTO game_night (game_date,game_time,game_location,game_description,host_id) values(?, ?, ?, ?, ?)";
             $q = $pdo->prepare($sql);
-            $q->execute(array($game_date,$game_time,$game_location,$game_description,$host_id,$player_id));
+            $q->execute(array($game_date,$game_time,$game_location,$game_description,$host_id));
+			
             Database::disconnect();
 			header("Location: game.php");
-
+		
 		}
     }
 ?>
@@ -56,9 +63,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <link   href="css/bootstrap.min.css" rel="stylesheet">
-    <script src="js/bootstrap.min.js"></script>
+	<?php
+		include 'database.php';
+		Database::drawHeader(1);
+	?>
 </head>
  
 <body>
@@ -101,7 +109,7 @@
                         </div>
                       </div>
 					  
-					  <div class="control-group <?php echo !empty($game_descriptionError)?'error':'';?>">
+					 <div class="control-group <?php echo !empty($game_descriptionError)?'error':'';?>">
                         <label class="control-label">Description</label>
                         <div class="controls">
                             <input name="game_description" type="text" value="<?php echo !empty($game_description)?$game_description:'';?>">
@@ -109,41 +117,7 @@
                                 <span class="help-inline"><?php echo $game_descriptionError;?></span>
                             <?php endif; ?>
                         </div>
-                      
-					  </div><div class="control-group <?php echo !empty($game_hostErrorError)?'error':'';?>">
-                        <label class="control-label">Host</label>
-                        <div class="controls">
-							<select name="host_id">
-							<?php	
-								$pdo = Database::connect();
-								$sql = 'SELECT * FROM host ORDER BY id DESC';
-								$tempflag = true;
-								foreach ($pdo->query($sql) as $row) {
-										echo "<option value=" . $row['id'] . ">" . $row['name'] . "</option>";
-								}
-							?>
-							</select>
-						</div>
-                      </div>
-					  
-					<div class="control-group <?php echo !empty($game_playerErrorError)?'error':'';?>">
-                        <label class="control-label">Player</label>
-                        <div class="controls">
-							<select name="player_id">
-							<?php	
-								$pdo = Database::connect();
-								$sql = 'SELECT * FROM players ORDER BY id DESC';
-								$tempflag = true;
-								foreach ($pdo->query($sql) as $row) {
-									echo "<option value=" . $row['id'] . ">" . $row['name'] . "</option>";	
-								}
-							?>
-							</select>
-						</div>
-                    </div>
-					
-					
-					  
+					</div>	
                     <div class="form-actions">
                          <button type="submit" class="btn btn-success">Create</button>
                          <a class="btn" href="game.php">Back</a>
