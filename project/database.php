@@ -79,7 +79,7 @@ class Database
 		}
 		
 		echo '</div>';
-		echo '<h3>Welcome back ' . $_SESSION['name'] . '! Type: ' . $_SESSION['type'] . ' User ID : ' . $_SESSION['user_id'] . '</h3>';
+		echo '<h3>Welcome back ' . $_SESSION['name'] . '!</h3>';
 		echo '</div>';
 		
 	}

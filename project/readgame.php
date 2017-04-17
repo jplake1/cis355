@@ -102,8 +102,15 @@
                         </div>
                       </div>
 					  
+					  <div class="control-group">
+                        <label class="control-label">Attached File</label>
+                        <div class="controls">
+                            <a href="fileDownload2.php?id=<?php echo $data['id'];?>"><?php echo $data['file_name']; ?></a>
+                        </div>
+                      </div>
+					  
                         <div class="form-actions">
-                          <a class="btn" href="game.php">Back</a>
+                          <a class="btn btn-danger" href="game.php">Back</a>
                        </div>
                      
                       

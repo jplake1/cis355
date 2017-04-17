@@ -60,7 +60,7 @@
                         </div>
                       </div>
                         <div class="form-actions">
-                          <a class="btn" href="player.php">Back</a>
+                          <a class="btn btn-danger" href="player.php">Back</a>
                        </div>
                      
                       

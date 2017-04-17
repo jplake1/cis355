@@ -22,8 +22,8 @@
         $game_description = $_POST['game_description'];
         $game_location = $_POST['game_location'];
 		$game_time = $_POST['game_time'];
-		$host_id = $_POST['host_id'];
-		$player_id = $_POST['player_id'];
+		$host_id = $_POST['host'];
+		$player_id = $_POST['player'];
          
         // validate input
         $valid = true;
@@ -90,7 +90,7 @@
                         <h3>Update a Game</h3>
                     </div>
              
-                    <form class="form-horizontal" action="updategame.php?id=<?php echo $id?>" method="post">
+                    <form class="form-horizontal" action="updategame2.php?id=<?php echo $id?>" method="post">
                       
 					  <div class="control-group <?php echo !empty($game_dateError)?'error':'';?>">
                         <label class="control-label">Date</label>
@@ -132,10 +132,10 @@
                         </div>
                       </div>
 					
-					<div class="control-group <?php echo !empty($game_hostErrorError)?'error':'';?>">
+					<div class="control-group">
                         <label class="control-label">Host</label>
                         <div class="controls">
-							<select name="host_id">
+							<select name="host">
 							<?php	
 								$pdo = Database::connect();
 								$sql = 'SELECT * FROM host ORDER BY id DESC';
@@ -148,15 +148,16 @@
 										echo "<option value=" . $row['id'] . ">" . $row['name'] . "</option>";
 									}
 								}
+								Database::disconnect();
 							?>
 							</select>
 						</div>
                       </div>
 					  
-					<div class="control-group <?php echo !empty($game_playerErrorError)?'error':'';?>">
+					<div class="control-group">
                         <label class="control-label">Player</label>
                         <div class="controls">
-							<select name="player_id">
+							<select name="player">
 							<?php	
 								$pdo = Database::connect();
 								$sql = 'SELECT * FROM players ORDER BY id DESC';
@@ -169,6 +170,7 @@
 										echo "<option value=" . $row['id'] . ">" . $row['name'] . "</option>";
 									}
 								}
+								Database::disconnect();
 							?>
 							</select>
 						</div>
@@ -176,7 +178,7 @@
 					  
                       <div class="form-actions">
                           <button type="submit" class="btn btn-success">Update</button>
-                          <a class="btn" href="game.php">Back</a>
+                          <a class="btn btn-danger" href="game.php">Back</a>
                         </div>
                     </form>
                 </div>

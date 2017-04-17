@@ -120,7 +120,7 @@
 					</div>	
                     <div class="form-actions">
                          <button type="submit" class="btn btn-success">Create</button>
-                         <a class="btn" href="game.php">Back</a>
+                         <a class="btn btn-danger" href="game.php">Back</a>
                     </div>
                     </form>
                 </div>

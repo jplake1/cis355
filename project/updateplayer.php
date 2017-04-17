@@ -111,7 +111,7 @@
                       </div>
                       <div class="form-actions">
                           <button type="submit" class="btn btn-success">Update</button>
-                          <a class="btn" href="player.php">Back</a>
+                          <a class="btn btn-danger" href="player.php">Back</a>
                         </div>
                     </form>
                 </div>

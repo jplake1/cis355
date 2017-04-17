@@ -32,7 +32,7 @@
                                 echo '<td>'. $row['email_address'] . '</td>';
                                 echo '<td>'. $row['phone_number'] . '</td>';
                                 echo '<td width=250>';
-                                echo '<a class="btn" href="readplayer.php?id='.$row['id'].'">Read</a>';
+                                echo '<a class="btn btn-primary" href="readplayer.php?id='.$row['id'].'">Read</a>';
                                 echo ' ';
 								if($_SESSION['type'] == 0 | $_SESSION['type'] == 2){
 									if($_SESSION['user_id'] == $row['user_id'] | $_SESSION['type'] == 2){

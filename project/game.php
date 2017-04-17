@@ -29,7 +29,7 @@
                           <th>Time</th>
 						  <th>Host</th>
 						  <th>Player</th>
-						  <th>Action<th>
+						  <th>Action</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -50,7 +50,7 @@
                        $sql = 'SELECT * FROM game_night ORDER BY id DESC';
                        foreach ($pdo->query($sql) as $row) {
                                 echo '<tr>';
-                                echo '<td width=100>'. $row['game_date'] . '</td>';
+                                echo '<td>'. $row['game_date'] . '</td>';
                                 echo '<td>'. $row['game_description'] . '</td>';
                                 echo '<td>'. $row['game_location'] . '</td>';
 								echo '<td>'. $row['game_time'] . '</td>';
@@ -58,22 +58,22 @@
 								$tempSQL = "SELECT name FROM host WHERE id='".$row['host_id']."'";
 								foreach ($pdo->query($tempSQL) as $row2) {
 									$tempFlag = false;
-									echo '<td width=100>'. $row2['name'] . '</td>';
+									echo '<td>'. $row2['name'] . '</td>';
 									}
 								if($tempFlag){
-									echo '<td width=100></td>';
+									echo '<td></td>';
 								}
 								$tempSQL = "SELECT name FROM players WHERE id='".$row['player_id']."'";
 								$tempFlag = true;
 								foreach ($pdo->query($tempSQL) as $row3) {
 									$tempFlag = false;
-									echo '<td width=100>'. $row3['name'] . '</td>';
+									echo '<td>'. $row3['name'] . '</td>';
 									}
 								if($tempFlag){
-									echo '<td width=100></td>';
+									echo '<td></td>';
 								}
 								echo '<td width=250>';
-                                echo '<a class="btn" href="readgame.php?id='.$row['id'].'">Read</a>';
+                                echo '<a class="btn btn-primary" href="readgame.php?id='.$row['id'].'">Read</a>';
                                 echo ' ';
 								if($_SESSION['type'] == 1 | $_SESSION['type'] == 2){
 									if($host_id == $row['host_id']){

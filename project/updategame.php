@@ -54,7 +54,29 @@
             $sql = "UPDATE game_night  set game_date = ?, game_time = ?, game_location =?, game_description =? WHERE id = ?";
             $q = $pdo->prepare($sql);
             $q->execute(array($game_date,$game_time,$game_location,$game_description,$id));
-            Database::disconnect();
+            
+			if($_FILES['userfile']['size'] > 0){
+				$fileName = $_FILES['userfile']['name'];
+				$tmpName  = $_FILES['userfile']['tmp_name'];
+				$fileSize = $_FILES['userfile']['size'];
+				$fileType = $_FILES['userfile']['type'];
+			
+				$fp      = fopen($tmpName, 'r');
+				$content = fread($fp, filesize($tmpName));
+				$content = addslashes($content);
+				fclose($fp);
+			
+				if(!get_magic_quotes_gpc()){
+				$fileName = addslashes($fileName);
+				}
+			
+				$sql = "UPDATE game_night  set file_name = ?, size = ?, type =?, content =? WHERE id = ?";
+				$q = $pdo->prepare($sql);
+				$q->execute(array($fileName,$fileSize,$fileType,$content,$id));
+			
+			}
+			
+			Database::disconnect();
             header("Location: game.php");
         }
     } else {
@@ -70,6 +92,7 @@
 		$game_description = $data['game_description'];
 		$host_id = $data['host_id'];
 		$player_id = $data['player_id'];
+		$file_Name = $data['file_name'];
         Database::disconnect();
     }
 ?>
@@ -90,7 +113,7 @@
                         <h3>Update a Game</h3>
                     </div>
              
-                    <form class="form-horizontal" action="updategame.php?id=<?php echo $id?>" method="post">
+                    <form class="form-horizontal" enctype="multipart/form-data" action="updategame.php?id=<?php echo $id?>" method="post">
                       
 					  <div class="control-group <?php echo !empty($game_dateError)?'error':'';?>">
                         <label class="control-label">Date</label>
@@ -131,9 +154,18 @@
                             <?php endif; ?>
                         </div>
                       </div>
+					  <div class="control-group">
+                        <label class="control-label">File Upload</label>
+						<div class="controls">
+							<input name="current" type="text" value="<?php echo "" . $file_Name . ""; ?>">
+							<br>
+							<input type="hidden" name="MAX_FILE_SIZE" value="2000000">
+							<input class="help-inline" name="userfile" type="file" id="userfile">
+						</div>
+					</div>
                       <div class="form-actions">
                           <button type="submit" class="btn btn-success">Update</button>
-                          <a class="btn" href="game.php">Back</a>
+                          <a class="btn btn-danger" href="game.php">Back</a>
                         </div>
                     </form>
                 </div>
