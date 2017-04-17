@@ -26,7 +26,8 @@
 <html lang="en">
 <head>
     <?php
-		Database::drawHeader(0);
+		include 'functions.php';
+		Functions::drawHeader(0);
 	?>
 </head>
  

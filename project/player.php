@@ -3,7 +3,8 @@
 <head>
 	<?php
 		include 'database.php';
-		Database::drawHeader(2);
+		include 'functions.php';
+		Functions::drawHeader(2)
 	?>
 </head>
  
