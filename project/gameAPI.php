@@ -10,13 +10,11 @@
 			$sql = "SELECT game_date, game_description, game_location, game_time FROM game_night";
 		}
 		
-		$arr = array();
-		foreach ($pdo->query($sql) as $row) {
-			array_push($arr, $row['game_date'] . ", " . $row['game_time'] . ", " . $row['game_location'] . ", " . $row['game_description']);
-		}
-		
+		$q = $pdo->prepare($sql);
+        $q->execute(array());
+        $data = $q->fetchALL(PDO::FETCH_ASSOC);
 		Database::disconnect();
 		
-		echo '["Games: "' . json_encode($arr) . ']';
+		echo json_encode($data);
 
 ?>
